@@ -1,4 +1,7 @@
 # tested on minikube
+# couchdb single node setup: https://docs.couchdb.org/en/master/setup/single-node.html
+# curl -u admin:password -X PUT http://127.0.0.1:5984/_users
+---
 apiVersion: v1
 kind: Namespace 
 metadata:
