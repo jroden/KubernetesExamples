@@ -1,4 +1,3 @@
-# tested on minikube
 # couchdb single node setup: https://docs.couchdb.org/en/master/setup/single-node.html
 # curl -u admin:password -X PUT http://127.0.0.1:5984/_users
 ---
@@ -31,6 +30,16 @@ spec:
   selector:
     app: db
 ---
+# outside of example purposes, secrets would be stored in secret management software
+# and retrieved/set in a secure manner as part of a deployment pipeline
+apiVersion: v1
+kind: Secret
+data:
+  password: password
+metadata:
+  name: dbsecrets
+  namespace: db
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,6 +63,11 @@ spec:
               value: admin
             - name: COUCHDB_PASSWORD
               value: password
+            - name: examplepassword
+              valueFrom:
+                secretKeyRef:
+                  key: password
+                  name: dbsecrets
           ports:
           - name: couchdb
             containerPort: 5984

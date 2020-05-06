@@ -1,0 +1,43 @@
+# kubectl exec 'pod-name-here' -n configs -it -- printenv
+---
+apiVersion: v1
+kind: Namespace 
+metadata:
+  name: configs
+---
+apiVersion: v1
+kind: ConfigMap 
+data:
+  env: dev
+  favoriteColor: blue
+  randomShape: hexagon
+metadata:
+  name: devconfigs
+  namespace: configs
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ubuntu
+  namespace: configs
+spec:
+  selector:
+    matchLabels:
+      app: configapp
+  template:
+    metadata:
+      name: ubuntu
+      labels:
+        app: configapp
+    spec:
+      containers:
+        - name: ubuntu
+          image: ubuntu:latest
+          stdin: True
+          tty: True
+          env:
+            - name: env
+              valueFrom:
+                configMapKeyRef:
+                  key: env
+                  name: devconfigs
