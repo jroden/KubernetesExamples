@@ -15,6 +15,8 @@ roleRef:
   kind: Role
   apiGroup: rbac.authorization.k8s.io
   name: read-only-role
+  apiGroup: rbac.authorization.k8s.io
 subjects:
   - kind: User
     name: test-user
+    apiGroup: rbac.authorization.k8s.io
