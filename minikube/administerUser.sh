@@ -31,7 +31,6 @@ openssl x509 -in ./test-user.crt -noout -text # verify the signed cert has expec
 
 # 5) set user credentials using signed cert & key
 kubectl config set-credentials test-user --client-certificate=./test-user.crt --client-key=./test-user.key
-# kubectl config set-credentials test-user --client-certificate=/Users/james/.minikube/profiles/minikube/client.crt --client-key=/Users/james/.minikube/profiles/minikube/client.key
 kubectl config set-context test-context --cluster=minikube --user=test-user
 
 # 6) test access
